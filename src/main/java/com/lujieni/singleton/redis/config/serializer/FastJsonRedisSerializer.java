@@ -10,7 +10,7 @@ import org.springframework.data.redis.serializer.SerializationException;
 
 /**
  * 利用fastjson,自己构造序列化对象
- * 比起用StringRedisSerializer存,序列化的好处是可以存储对象的包名+类名在redis中
+ * 比起用StringRedisSerializer序列化方式存,这个序列化方式的好处是可以存储对象的包名+类名在redis中
  */
 public class FastJsonRedisSerializer implements RedisSerializer<Object> {
     private static final ParserConfig defaultRedisConfig = new ParserConfig();

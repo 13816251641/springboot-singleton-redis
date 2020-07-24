@@ -18,7 +18,7 @@ import java.io.IOException;
 public class TestList {
 
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     /**
      * 将Person存储在list中
@@ -36,7 +36,7 @@ public class TestList {
      */
     @Test
     public void test02() throws IOException {
-        Person person = JacksonUtil.readValue(redisTemplate.opsForList().leftPop("persons"), Person.class);
+        Person person = JacksonUtil.readValue((String)redisTemplate.opsForList().leftPop("persons"), Person.class);
         System.out.println(person);
     }
 
@@ -46,7 +46,7 @@ public class TestList {
      */
     @Test
     public void test03() throws IOException {
-        Person person = JacksonUtil.readValue(redisTemplate.opsForList().index("persons", 0),Person.class);
+        Person person = JacksonUtil.readValue((String)redisTemplate.opsForList().index("persons", 0),Person.class);
         System.out.println(person);
     }
 

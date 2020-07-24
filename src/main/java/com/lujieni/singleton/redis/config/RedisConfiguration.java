@@ -35,13 +35,14 @@ public class RedisConfiguration {
 
 
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        /* 使用基于jackson的序列化方式,序列化方式可以在redis中保存类的包名+类名 */
+        /* 使用基于jackson的序列化方式,该序列化方式可以在redis中保存类的包名+类名,但你直接用String存那就抱歉了 */
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         //redisTemplate.setValueSerializer(serializer);使用基于fastjson的序列化方式
 
         /* 设置hash的序列化方式  */
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+
 
         redisTemplate.afterPropertiesSet();
 
