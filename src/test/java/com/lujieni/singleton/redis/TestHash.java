@@ -20,7 +20,7 @@ import java.util.Map;
 public class TestHash {
 
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate redisTemplate;
 
     /**
      *
@@ -47,12 +47,13 @@ public class TestHash {
      */
     @Test
     public void test03() {
-        Map<Object, Object> map = redisTemplate.opsForHash().entries("student");
+        Map<String, Object> map = redisTemplate.opsForHash().entries("student");
         System.out.println(map);
     }
 
     /**
      * 删除key为student下的2个key和其对应的值
+     * student下面如果只有name和age这2个字段的话就student也会没有
      */
     @Test
     public void test04() {
@@ -72,25 +73,25 @@ public class TestHash {
 
     @Test
     public void test06() {
-        Map<Object, Object> map = redisTemplate.opsForHash().entries("person");
+        Map<String, Object> map = redisTemplate.opsForHash().entries("person");
         Person person = mapToEntity(map, Person.class);
         System.out.println(person);
     }
 
     /**
-     * 实体类转Map,注意这里的value用的是string存
+     * 实体类转Map,注意这里的value用的是Object存
      * @param object
      * @return
      */
-    public Map<String, String> entityToMap(Object object) {
-        Map<String, String> map = new HashMap<>();
+    public Map<String, Object> entityToMap(Object object) {
+        Map<String, Object> map = new HashMap<>();
         /* getDeclaredFields()获得某个类的所有声明的字段，即包括public、private和proteced，但是不包括父类的申明字段 */
         for (Field field : object.getClass().getDeclaredFields()){
             try {
                 boolean flag = field.isAccessible();
                 field.setAccessible(true);
                 Object o = field.get(object);
-                map.put(field.getName(), o.toString());
+                map.put(field.getName(), o);
                 field.setAccessible(flag);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -106,7 +107,7 @@ public class TestHash {
      * @param entity  需要转化成的实体类
      * @return
      */
-    public <T> T mapToEntity(Map<Object, Object> map, Class<T> entity) {
+    public <T> T mapToEntity(Map<String, Object> map, Class<T> entity) {
         T t = null;
         try {
             t = entity.newInstance();
@@ -115,13 +116,15 @@ public class TestHash {
                     boolean flag = field.isAccessible();
                     field.setAccessible(true);
                     Object object = map.get(field.getName());
-                    if (object!= null) {
-                        if(field.getType().isAssignableFrom(Integer.class)){
+                    if (object != null) {
+                        field.set(t, object);
+                    }
+                    /*    if(field.getType().isAssignableFrom(Integer.class)){
                             field.set(t, Integer.valueOf((String)object));
                         }else{
                             field.set(t, object);
                         }
-                    }
+                    }*/
                     field.setAccessible(flag);
                 }
             }
