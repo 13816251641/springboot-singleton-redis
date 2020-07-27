@@ -39,4 +39,23 @@ public class TestString {
         System.out.println(o.toString());
     }
 
+    /**
+     * 可以存null进redis
+     * @throws Exception
+     */
+    @Test
+    public void testSetNullToRedis() throws Exception {
+        redisTemplate.opsForValue().set("null",null);
+    }
+
+    /**
+     * 从redis中取出的值可以为null
+     * @throws Exception
+     */
+    @Test
+    public void testGetNullToRedis() throws Exception {
+        Object value = redisTemplate.opsForValue().get("null");
+        System.out.println(value);
+    }
+
 }

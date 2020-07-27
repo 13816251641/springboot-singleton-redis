@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lujieni.singleton.redis.config.serializer.FastJsonRedisSerializer;
+import com.lujieni.singleton.redis.redis.storage.RedisCacheStorage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.support.collections.RedisStore;
 
 @Configuration
 public class RedisConfiguration {
@@ -49,5 +51,14 @@ public class RedisConfiguration {
 
         return redisTemplate;
     }
+
+    @Bean
+    public RedisCacheStorage redisCacheStorage(RedisTemplate redisTemplate){
+        RedisCacheStorage redisCacheStorage = new RedisCacheStorage();
+        redisCacheStorage.setRedisTemplate(redisTemplate);
+        return redisCacheStorage;
+    }
+
+
 
 }

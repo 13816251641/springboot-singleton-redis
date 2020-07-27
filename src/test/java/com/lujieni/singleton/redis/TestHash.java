@@ -119,12 +119,6 @@ public class TestHash {
                     if (object != null) {
                         field.set(t, object);
                     }
-                    /*    if(field.getType().isAssignableFrom(Integer.class)){
-                            field.set(t, Integer.valueOf((String)object));
-                        }else{
-                            field.set(t, object);
-                        }
-                    }*/
                     field.setAccessible(flag);
                 }
             }
