@@ -10,12 +10,11 @@ import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.util.StringUtils;
 
 public class DefaultTTLRedisCache<V>{
+    private static final Log LOG = LogFactory.getLog(DefaultTTLRedisCache.class);
 
     private RedisCacheStorage<String,V> cacheStorage;
 
     protected ITTLCacheProvider<V> cacheProvider;
-
-    private static final Log LOG = LogFactory.getLog(DefaultTTLRedisCache.class);
 
     public void setCacheStorage(RedisCacheStorage<String, V> cacheStorage) {
         this.cacheStorage = cacheStorage;
@@ -31,9 +30,9 @@ public class DefaultTTLRedisCache<V>{
         }else{
             V value = null;
             try {
-                value = this.cacheStorage.get(key);
+                value = this.cacheStorage.get(key);//从redis中获取
             } catch (KeyIsNotFoundException var1) {
-                value = this.cacheProvider.get(key);
+                value = this.cacheProvider.get(key);//从数据库中获取
                 LOG.warn("缓存key[" + key + "]不存在，走数据库查询，返回结果[" + value + "]");
                 if (value != null) {
                     this.cacheStorage.set(key, value);

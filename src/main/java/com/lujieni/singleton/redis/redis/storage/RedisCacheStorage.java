@@ -12,9 +12,6 @@ public class RedisCacheStorage<K,V> implements IRemoteCacheStore<K,V> {
     public RedisCacheStorage() {
     }
 
-    public RedisTemplate getRedisTemplate() {
-        return redisTemplate;
-    }
 
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;

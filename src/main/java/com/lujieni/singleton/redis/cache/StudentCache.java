@@ -19,8 +19,8 @@ public class StudentCache extends DefaultTTLRedisCache<StudentPO> implements Ini
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        setCacheStorage(redisCacheStorage);
-        setCacheProvider(studentRedisCacheProvider);
+        super.setCacheStorage(redisCacheStorage);
+        super.setCacheProvider(studentRedisCacheProvider);
     }
 
 }
