@@ -78,6 +78,7 @@ public class TestHash {
         System.out.println(person);
     }
 
+
     /**
      * 实体类转Map,注意这里的value用的是Object存
      * @param object
@@ -101,6 +102,8 @@ public class TestHash {
     }
 
 
+
+
     /**
      * Map转实体类
      * @param map 需要初始化的数据，key字段必须与实体类的成员名字一样，否则赋值为空
@@ -115,9 +118,9 @@ public class TestHash {
                 if (map.containsKey(field.getName())) {
                     boolean flag = field.isAccessible();
                     field.setAccessible(true);
-                    Object object = map.get(field.getName());
-                    if (object != null) {
-                        field.set(t, object);
+                    Object value = map.get(field.getName());
+                    if (value != null) {
+                        field.set(t, value);
                     }
                     field.setAccessible(flag);
                 }
