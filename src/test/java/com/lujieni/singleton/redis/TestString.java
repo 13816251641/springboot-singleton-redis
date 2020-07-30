@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TestString {
     /*
      * spring中一旦类指定了泛型的话,装配的类的泛型必须要完全一致
-     * 没有指定任何泛型的话匹配本类或者子类的任意泛型或非泛型类
+     * 没有指定任何泛型的话匹配本类或者子类的任意泛型或非泛型类都可以
      */
     @Autowired
     private RedisTemplate redisTemplate;

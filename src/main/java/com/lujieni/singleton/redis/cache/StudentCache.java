@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 public class StudentCache extends DefaultTTLRedisCache<StudentPO> implements InitializingBean {
 
     @Autowired
-    private RedisCacheStorage redisCacheStorage;
+    private RedisCacheStorage redisCacheStorage;//从redis中取
 
     @Autowired
-    private StudentRedisCacheProvider studentRedisCacheProvider;
+    private StudentRedisCacheProvider studentRedisCacheProvider;//从数据库中取
 
     @Override
     public void afterPropertiesSet() throws Exception {

@@ -1,24 +1,24 @@
 package com.lujieni.singleton.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.lujieni.singleton.redis.domain.Person;
-import com.lujieni.singleton.redis.util.JacksonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Iterator;
 import java.util.Set;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class TestSet {
+public class TestSet{
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    private ApplicationContext applicationContext;
 
     /**
      * set 批量插入功能 set无序不可重复
