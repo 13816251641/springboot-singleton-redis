@@ -30,7 +30,7 @@ public class TestString {
     @Test
     public void testSaveObj2Redis() throws Exception {
        Person person = new Person("陆哥哥520", 27);
-       redisTemplate.opsForValue().set("com.lujieni2", person);
+      // redisTemplate.opsForValue().set("com.lujieni2", person);
     }
 
     @Test
