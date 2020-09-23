@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StudentRedisCacheProvider implements ITTLCacheProvider<StudentPO> {
+public class StudentCacheProvider implements ITTLCacheProvider<StudentPO> {
 
     @Autowired
     private StudentDao studentDao;

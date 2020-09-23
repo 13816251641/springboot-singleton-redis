@@ -30,21 +30,25 @@ public class RedisConfiguration {
 
         FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer();
 
-        Jackson2JsonRedisSerializer <Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+       /*
+            fastJsonRedisSerializer和jackson2JsonRedisSerializer等价,这里使用一个即可
+            Jackson2JsonRedisSerializer <Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+            objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+            jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 
+            redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
+            redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
+        */
 
+        /* 设置string的序列化方式 */
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        /* 使用基于jackson的序列化方式,该序列化方式可以在redis中保存类的包名+类名,但你直接用String存value那就抱歉了 */
-        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-        //redisTemplate.setValueSerializer(fastJsonRedisSerializer);使用基于fastjson的序列化方式
+        redisTemplate.setValueSerializer(fastJsonRedisSerializer);
 
-        /* 设置hash的序列化方式  */
+        /* 设置hash的序列化方式 */
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
+        redisTemplate.setHashValueSerializer(fastJsonRedisSerializer);
 
 
         redisTemplate.afterPropertiesSet();

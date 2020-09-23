@@ -36,7 +36,7 @@ public class TestString {
     @Test
     public void testGetDataFromRedis() throws Exception {
         Object o = redisTemplate.opsForValue().get("com.lujieni2");
-        System.out.println(o.toString());
+        System.out.println(o.getClass().getName());//com.lujieni.singleton.redis.domain.Person
     }
 
     /**
@@ -55,7 +55,7 @@ public class TestString {
     @Test
     public void testGetNullToRedis() throws Exception {
         Object value = redisTemplate.opsForValue().get("null");
-        System.out.println(value);
+        System.out.println(value == null);
     }
 
 }

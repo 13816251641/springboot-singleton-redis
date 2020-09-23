@@ -19,6 +19,9 @@ public class FastJsonRedisSerializer implements RedisSerializer<Object> {
         defaultRedisConfig.setAutoTypeSupport(true);
     }
 
+    public FastJsonRedisSerializer() {
+    }
+
     @Override
     public byte[] serialize(Object object) throws SerializationException {
         if (object == null) {
