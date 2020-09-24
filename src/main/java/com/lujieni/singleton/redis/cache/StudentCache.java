@@ -21,6 +21,9 @@ public class StudentCache extends DefaultTTLRedisCache<StudentPO> {
 
     @Override
     public void afterPropertiesSet() {
+        /*
+            非泛型变量可以赋值给泛型变量,但有风险
+         */
         super.setCacheStorage(redisCacheStorage);
         super.setCacheProvider(studentCacheProvider);
         setTimeOut(5*60);//5分钟

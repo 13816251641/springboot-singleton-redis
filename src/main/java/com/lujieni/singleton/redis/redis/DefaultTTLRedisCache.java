@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
-public abstract class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBean {
+public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBean {
     private static final Log LOG = LogFactory.getLog(DefaultTTLRedisCache.class);
 
     private ITTLCacheProvider<V> cacheProvider;//缓存提供接口,对应不同表的provider
@@ -42,6 +42,16 @@ public abstract class DefaultTTLRedisCache<V> implements ICache<String,V>, Initi
         return this.getUUID() + "_" + key;
     }
 
+    /**
+     * 没有任何实现,希望子类实现
+     * @return
+     */
+    @Override
+    public String getUUID() {
+        return "";
+    }
+
+    @Override
     public V get(String key){
         if(StringUtils.isEmpty(key)){
             LOG.warn("缓存[" + this.getUUID() + "]，key为空串，返回结果[null]");
@@ -76,18 +86,22 @@ public abstract class DefaultTTLRedisCache<V> implements ICache<String,V>, Initi
         }
     }
 
+    @Override
     public void invalid() {
         throw new RuntimeException(this.getUUID() + ":TTLCache cannot invalid all!");
     }
 
+    @Override
     public void invalid(String key) {
         this.cacheStorage.remove(this.getKey(key));
     }
 
+    @Override
     public Map<String, V> get() {
         throw new RuntimeException(this.getUUID() + ":TTLCache cannot get all!");
     }
 
+    @Override
     public void invalidMulti(String... keys) {
         if (keys != null) {
             String[] skeys = new String[keys.length];
@@ -101,4 +115,8 @@ public abstract class DefaultTTLRedisCache<V> implements ICache<String,V>, Initi
     }
 
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+
+    }
 }
