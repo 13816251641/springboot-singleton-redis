@@ -25,6 +25,11 @@ public abstract class DefaultTTLRedisCache<V> implements ICache<String,V>, Initi
         this.cacheProvider = cacheProvider;
     }
 
+    /**
+     * RedisCacheStorage cacheStorage 非泛型变量
+     * 非泛型变量可以赋值给泛型变量,但有风险,比如这里可以 setCacheStorage(cacheStorage)
+     * @param cacheStorage
+     */
     public void setCacheStorage(RedisCacheStorage<String, V> cacheStorage) {
         this.cacheStorage = cacheStorage;
     }
