@@ -16,25 +16,42 @@ import java.util.concurrent.TimeUnit;
  * @param <V>
  */
 public class RedisCacheStorage<K,V> implements IRemoteCacheStore<K,V>, InitializingBean {
+    /**
+     * 日志
+     */
+    private static final Log log = LogFactory.getLog(RedisCacheStorage.class);
 
+    /**
+     * 实际进行缓存操作的template，由spring提供
+     */
     private RedisTemplate redisTemplate;
 
-    Log log = LogFactory.getLog(this.getClass());
-
-
     public RedisCacheStorage() {
+
     }
 
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
-
+    /**
+     * 存入数据，默认时效：10分钟
+     * @param key
+     * @param value
+     * @return
+     */
     @Override
     public boolean set(K key, V value) {
-        return this.set(key, value, 600);//默认10分钟
+        return this.set(key, value, 600);
     }
 
+    /**
+     * 存入有时效的数据
+     * @param key
+     * @param value
+     * @param exp
+     * @return boolean 是否执行成功
+     */
     @Override
     public boolean set(K key, V value, int exp) {
         if (key == null) {
@@ -60,11 +77,21 @@ public class RedisCacheStorage<K,V> implements IRemoteCacheStore<K,V>, Initializ
         }
     }
 
+    /**
+     * <p>删除指定的缓存信息</p>
+     *
+     * @param key
+     */
     @Override
     public void remove(K key) {
         this.redisTemplate.delete(key);
     }
 
+    /**
+     * <p>删除多个key的缓存信息</p>
+     *
+     * @param keys
+     */
     @Override
     public void removeMulti(K... keys) {
         this.redisTemplate.delete(keys);

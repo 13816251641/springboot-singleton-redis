@@ -6,12 +6,4 @@ public class RedisCacheStorageException extends RuntimeException {
         super(message);
     }
 
-    public RedisCacheStorageException(Throwable e) {
-        super(e);
-    }
-
-    public RedisCacheStorageException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
 }

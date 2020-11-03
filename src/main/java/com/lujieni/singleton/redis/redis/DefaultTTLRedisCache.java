@@ -12,14 +12,32 @@ import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
+/**
+ * 基于redis的缓存实现
+ * @param <V>
+ */
 public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBean {
+
+    /**
+     * 日志类
+     */
     private static final Log LOG = LogFactory.getLog(DefaultTTLRedisCache.class);
 
-    private ITTLCacheProvider<V> cacheProvider;//缓存提供接口,对应不同表的provider
+    /**
+     * 数据提供者
+     */
+    private ITTLCacheProvider<V> cacheProvider;
 
-    private RedisCacheStorage<String,V> cacheStorage;//操作redis的封装类
+    /**
+     * 数据存储器
+     */
+    private RedisCacheStorage<String,V> cacheStorage;
 
+    /**
+     * 超时时间,单位秒,默认10分钟
+     */
     protected int timeOut = 600;
+
 
     public void setCacheProvider(ITTLCacheProvider<V> cacheProvider) {
         this.cacheProvider = cacheProvider;
@@ -34,10 +52,21 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
         this.cacheStorage = cacheStorage;
     }
 
+    /**
+     * 设置超时时间
+     * @param seconds
+     */
     public void setTimeOut(int seconds) {
         this.timeOut = seconds;
     }
 
+
+    /**
+     * 根据uuid和key生成key
+     * @param key
+     * @return
+     * @see
+     */
     protected String getKey(String key) {
         return this.getUUID() + "_" + key;
     }
@@ -59,9 +88,10 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
         }else{
             V value = null;
             try {
-                /* 从redis中获取,value有可能为空 */
+                /* 从redis中获取,redis允许存null进去,所以value有可能为空 */
                 value = this.cacheStorage.get(this.getKey(key));
                 if (value == null) {
+                    /* value为null我们也不去查,防止缓存击穿  */
                     value = this.cacheProvider.get(key);
                     LOG.warn("缓存[" + this.getUUID() + "]，key[" + key + "]过期，重新走数据库查询，返回结果[" + value + "]");
                     this.cacheStorage.set(this.getKey(key), null, this.timeOut);

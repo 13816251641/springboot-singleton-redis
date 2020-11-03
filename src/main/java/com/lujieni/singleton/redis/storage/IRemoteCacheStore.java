@@ -3,34 +3,45 @@ package com.lujieni.singleton.redis.storage;
 public interface IRemoteCacheStore<K,V> {
 
     /**
-     * 永久设值
-     * @param var1
-     * @param var2
-     * @return
+     * 主动向Cache更新指定的数据
+     *
+     * @param key
+     * @param value
+     * @return boolean 是否执行成功
      */
-    boolean set(K var1, V var2);
+    boolean set(K key, V value);
 
     /**
-     * 设定过期时间
-     * @param var1
-     * @param var2
-     * @param var3
-     * @return
+     * 主动向Cache更新指定的数据,指定过期时间
+     *
+     * @param key
+     * @param value
+     * @param exp
+     * @return boolean 是否执行成功
      */
-    boolean set(K var1, V var2, int var3);
-
-    V get(K var1);
-
-    /**
-     * 从redis中删除数据
-     * @param var1
-     */
-    void remove(K var1);
+    boolean set(K key, V value, int exp);
 
     /**
-     * 从redis中批量删除数据
-     * @param var1
+     * 获取缓存
+     *
+     * @param key 缓存Key
+     * @return 缓存Value
      */
-    void removeMulti(K... var1);
+    V get(K key);
+
+    /**
+     * 删除指定的缓存信息
+     *
+     * @param key 缓存Key
+     */
+    void remove(K key);
+
+    /**
+     * 删除多个key的缓存信息
+     *
+     * @param keys 动态参数 数组[]
+     * @see
+     */
+    void removeMulti(K... keys);
 
 }
