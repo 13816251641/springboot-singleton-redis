@@ -18,6 +18,7 @@ public class StudentCache extends DefaultTTLRedisCache<StudentPO> {
 
     /**
      * 从redis中读取,在RedisConfiguration中已经实例化
+     * 非泛型变量
      */
     @Autowired
     private RedisCacheStorage redisCacheStorage;

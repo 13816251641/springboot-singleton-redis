@@ -46,7 +46,10 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
 
     /**
      * RedisCacheStorage cacheStorage 非泛型变量
+     *
+     * 泛型变量可以赋值给泛型变量,前提是泛型必须一致!!!
      * 非泛型变量可以赋值给泛型变量,但有风险,比如这里可以 setCacheStorage(cacheStorage)
+     *
      * @param cacheStorage
      */
     public void setCacheStorage(RedisCacheStorage<String, V> cacheStorage) {
