@@ -1,7 +1,7 @@
 package com.lujieni.singleton.redis.storage;
 
 /**
- * redis,ecache都可以实现
+ * redis,ecache任何缓存方式都可以实现这个接口
  * @param <K>
  * @param <V>
  */
