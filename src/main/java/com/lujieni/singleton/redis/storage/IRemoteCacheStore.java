@@ -1,5 +1,10 @@
 package com.lujieni.singleton.redis.storage;
 
+/**
+ * redis,ecache都可以实现
+ * @param <K>
+ * @param <V>
+ */
 public interface IRemoteCacheStore<K,V> {
 
     /**

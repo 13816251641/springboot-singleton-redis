@@ -11,13 +11,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudentCache extends DefaultTTLRedisCache<StudentPO> {
 
+    /**
+     * com.lujieni.singleton.redis.cache.StudentCache
+     */
     public static final String UUID = StudentCache.class.getName();
 
+    /**
+     * 从redis中读取,在RedisConfiguration中已经实例化
+     */
     @Autowired
-    private RedisCacheStorage redisCacheStorage;//从redis中取
+    private RedisCacheStorage redisCacheStorage;
 
+    /**
+     * 从数据库中读取
+     */
     @Autowired
-    private StudentCacheProvider studentCacheProvider;//从数据库中取
+    private StudentCacheProvider studentCacheProvider;
 
     @Override
     public void afterPropertiesSet() {
@@ -33,5 +42,6 @@ public class StudentCache extends DefaultTTLRedisCache<StudentPO> {
     public String getUUID() {
         return UUID;
     }
+
 
 }

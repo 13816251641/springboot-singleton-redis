@@ -16,10 +16,13 @@ public class TestCache {
 
     @Test
     public void test01(){
-        StudentPO studentPO = studentCache.get("1");
+        /*
+            redis中是可以把value=null的数据存入的
+         */
+        StudentPO studentPO = studentCache.get("100");
         System.out.println("studentPO:"+studentPO);
 
-        StudentPO studentPO2 = studentCache.get("1");
+        StudentPO studentPO2 = studentCache.get("100");
         System.out.println("studentPO2:"+studentPO2);
 
     }

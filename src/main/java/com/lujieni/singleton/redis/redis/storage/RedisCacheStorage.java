@@ -69,6 +69,7 @@ public class RedisCacheStorage<K,V> implements IRemoteCacheStore<K,V>, Initializ
         } else {
             boolean exist = this.redisTemplate.hasKey(key);
             if (!exist) {
+                /* 经验证缓存ttl失效或者key本身就不存在都会导致key没找到的情况 */
                 throw new KeyIsNotFoundException("key is not found!");
             } else {
                 Object obj = this.redisTemplate.opsForValue().get(key);

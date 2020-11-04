@@ -4,6 +4,7 @@ package com.lujieni.singleton.redis.redis;
 import com.lujieni.singleton.redis.provider.ITTLCacheProvider;
 import com.lujieni.singleton.redis.redis.exception.KeyIsNotFoundException;
 import com.lujieni.singleton.redis.redis.storage.RedisCacheStorage;
+import com.lujieni.singleton.redis.storage.IRemoteCacheStore;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -80,6 +81,11 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
         return "";
     }
 
+    /**
+     * 存在就从缓存中取,不存在走db并存入缓存
+     * @param key 缓存Key
+     * @return
+     */
     @Override
     public V get(String key){
         if(StringUtils.isEmpty(key)){
@@ -90,16 +96,11 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
             try {
                 /* 从redis中获取,redis允许存null进去,所以value有可能为空 */
                 value = this.cacheStorage.get(this.getKey(key));
-                if (value == null) {
-                    /* value为null我们也不去查,防止缓存击穿  */
-                    value = this.cacheProvider.get(key);
-                    LOG.warn("缓存[" + this.getUUID() + "]，key[" + key + "]过期，重新走数据库查询，返回结果[" + value + "]");
-                    this.cacheStorage.set(this.getKey(key), null, this.timeOut);
-                }
             }catch (KeyIsNotFoundException var1) {
+                /* 经验证缓存ttl失效或者key本身就不存在都会导致key没找到的情况 */
                 value = this.cacheProvider.get(key);//从数据库中获取
-                LOG.warn("缓存[" + this.getUUID() + "]，key[" + key + "]不存在，走数据库查询，返回结果[" + value + "]");
-                this.cacheStorage.set(this.getKey(key), value, this.timeOut);//value有可能为空
+                LOG.warn("缓存[" + this.getUUID() + "]_key[" + key + "]不存在或已经过期，走数据库查询，返回结果[" + value + "]");
+                this.cacheStorage.set(this.getKey(key), value, this.timeOut);//从数据库查询到的数据也有可能为空
             } catch (RedisConnectionFailureException var2) {
                 /*
                     redis出现了异常,你把数据再存在redis没有意义
@@ -107,10 +108,8 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
                 value = this.cacheProvider.get(key);
                 LOG.warn("redis连接出现异常，走数据库查询!");
                 LOG.error(var2);
-                return value;
             } catch (Exception var3) {
                 LOG.error(var3);
-                return value;
             }
             return value;
         }

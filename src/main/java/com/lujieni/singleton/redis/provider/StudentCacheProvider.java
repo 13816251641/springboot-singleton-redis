@@ -13,11 +13,11 @@ public class StudentCacheProvider implements ITTLCacheProvider<StudentPO> {
 
     /**
      * 加载单个元素
-     * @param var1
+     * @param key
      * @return
      */
     @Override
-    public StudentPO get(String var1) {
-        return studentDao.selectByPrimaryKey(Integer.parseInt(var1));
+    public StudentPO get(String key) {
+        return studentDao.selectByPrimaryKey(Integer.parseInt(key));
     }
 }
