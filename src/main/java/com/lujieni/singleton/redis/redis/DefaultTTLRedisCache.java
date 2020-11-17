@@ -32,7 +32,7 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
     /**
      * 数据存储器
      */
-    private RedisCacheStorage<String,V> cacheStorage;
+    private IRemoteCacheStore<String,V> cacheStorage;
 
     /**
      * 超时时间,单位秒,默认10分钟

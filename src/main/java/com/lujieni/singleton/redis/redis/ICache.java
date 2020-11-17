@@ -3,7 +3,7 @@ package com.lujieni.singleton.redis.redis;
 import java.util.Map;
 
 /**
- * 缓存接口
+ * 缓存功能通用接口
  * @param <K> 缓存Key类型
  * @param <V> 缓存Value类型
  */

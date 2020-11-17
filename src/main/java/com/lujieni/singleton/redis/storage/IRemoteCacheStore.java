@@ -2,6 +2,7 @@ package com.lujieni.singleton.redis.storage;
 
 /**
  * redis,ecache任何缓存方式都可以实现这个接口
+ * 缓存提供者需要实现的接口
  * @param <K>
  * @param <V>
  */
