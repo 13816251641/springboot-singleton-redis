@@ -25,7 +25,7 @@ public class RedisConfiguration {
      */
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory){
-        RedisTemplate redisTemplate = new RedisTemplate<>();
+        RedisTemplate redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
         FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer();
