@@ -2,7 +2,7 @@ package com.lujieni.singleton.redis.redis.storage;
 
 import com.lujieni.singleton.redis.redis.exception.KeyIsNotFoundException;
 import com.lujieni.singleton.redis.redis.exception.RedisCacheStorageException;
-import com.lujieni.singleton.redis.storage.IRemoteCacheStore;
+import com.lujieni.singleton.redis.storage.ITTLCacheStore;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @param <K>
  * @param <V>
  */
-public class RedisCacheStorage<K,V> implements IRemoteCacheStore<K,V>, InitializingBean {
+public class RedisCacheStorage<K,V> implements ITTLCacheStore<K,V>, InitializingBean {
     /**
      * 日志
      */
