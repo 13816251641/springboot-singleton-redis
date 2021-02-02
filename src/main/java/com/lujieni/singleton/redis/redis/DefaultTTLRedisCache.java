@@ -4,7 +4,7 @@ package com.lujieni.singleton.redis.redis;
 import com.lujieni.singleton.redis.provider.ITTLCacheProvider;
 import com.lujieni.singleton.redis.redis.exception.KeyIsNotFoundException;
 import com.lujieni.singleton.redis.redis.storage.RedisCacheStorage;
-import com.lujieni.singleton.redis.storage.ITTLCacheStore;
+import com.lujieni.singleton.redis.storage.ITTLCacheStorage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -25,14 +25,14 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
     private static final Log LOG = LogFactory.getLog(DefaultTTLRedisCache.class);
 
     /**
-     * 数据提供者
+     * 数据提供者,不通用,每个po可能逻辑不同
      */
     private ITTLCacheProvider<V> cacheProvider;
 
     /**
-     * 数据存储器
+     * 数据存储器,通用的
      */
-    private ITTLCacheStore<String,V> cacheStorage;
+    private ITTLCacheStorage<String,V> cacheStorage;
 
     /**
      * 超时时间,单位秒,默认10分钟

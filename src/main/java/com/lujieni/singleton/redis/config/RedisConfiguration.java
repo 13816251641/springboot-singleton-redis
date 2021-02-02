@@ -60,6 +60,7 @@ public class RedisConfiguration {
     public RedisCacheStorage redisCacheStorage(RedisTemplate redisTemplate){
         RedisCacheStorage redisCacheStorage = new RedisCacheStorage();
         redisCacheStorage.setRedisTemplate(redisTemplate);
+
         return redisCacheStorage;
     }
 

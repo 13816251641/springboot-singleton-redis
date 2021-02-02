@@ -18,7 +18,7 @@ public class StudentCache extends DefaultTTLRedisCache<StudentPO> {
 
     /**
      * 从redis中读取,在RedisConfiguration中已经实例化
-     * 非泛型变量
+     * 这样的写法泛型和普通Bean都有资格进行装配
      */
     @Autowired
     private RedisCacheStorage redisCacheStorage;
@@ -29,6 +29,9 @@ public class StudentCache extends DefaultTTLRedisCache<StudentPO> {
     @Autowired
     private StudentCacheProvider studentCacheProvider;
 
+    /**
+     *  覆写了父类的的afterPropertiesSet,执行的话会执行子类的
+     */
     @Override
     public void afterPropertiesSet() {
         /*

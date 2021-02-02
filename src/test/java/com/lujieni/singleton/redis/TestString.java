@@ -42,6 +42,8 @@ public class TestString {
     @Test
     public void testSetNullToRedis() throws Exception {
         redisTemplate.opsForValue().set("null",null);
+        //redisTemplate.opsForValue().set("null","a");
+
     }
 
     /**

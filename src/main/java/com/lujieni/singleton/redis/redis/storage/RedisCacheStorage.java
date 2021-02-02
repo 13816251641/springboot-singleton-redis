@@ -2,12 +2,13 @@ package com.lujieni.singleton.redis.redis.storage;
 
 import com.lujieni.singleton.redis.redis.exception.KeyIsNotFoundException;
 import com.lujieni.singleton.redis.redis.exception.RedisCacheStorageException;
-import com.lujieni.singleton.redis.storage.ITTLCacheStore;
+import com.lujieni.singleton.redis.storage.ITTLCacheStorage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @param <K>
  * @param <V>
  */
-public class RedisCacheStorage<K,V> implements ITTLCacheStore<K,V>, InitializingBean {
+public class RedisCacheStorage<K,V> implements ITTLCacheStorage<K,V>, InitializingBean {
     /**
      * 日志
      */
@@ -24,7 +25,7 @@ public class RedisCacheStorage<K,V> implements ITTLCacheStore<K,V>, Initializing
     /**
      * 实际进行缓存操作的template，由spring提供
      */
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<K,V> redisTemplate;
 
     public RedisCacheStorage() {
 
@@ -95,7 +96,7 @@ public class RedisCacheStorage<K,V> implements ITTLCacheStore<K,V>, Initializing
      */
     @Override
     public void removeMulti(K... keys) {
-        this.redisTemplate.delete(keys);
+        this.redisTemplate.delete(Arrays.asList(keys));
     }
 
     @Override

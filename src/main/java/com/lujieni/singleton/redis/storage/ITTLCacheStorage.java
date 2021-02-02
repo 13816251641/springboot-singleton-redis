@@ -6,7 +6,7 @@ package com.lujieni.singleton.redis.storage;
  * @param <K>
  * @param <V>
  */
-public interface ITTLCacheStore<K,V> {
+public interface ITTLCacheStorage<K,V> {
 
     /**
      * 主动向Cache更新指定的数据
