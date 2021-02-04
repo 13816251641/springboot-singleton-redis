@@ -17,11 +17,18 @@ import org.springframework.data.redis.support.collections.RedisStore;
 public class RedisConfiguration {
 
     /**
-     * 自定义RedisTemplate的bean，不使用springboot帮我们配置的RedisTemplate
-     * redisTemplate 默认序列化使用的jdkSerializeable, 存储二进制字节码导致我们
-     * 使用redis客户端工具看的时候只能看到2进制,所以自定义序列化类
+     *
+     * 1.
+     *  方法名一定要叫 redisTemplate,否则 springboot仍旧会帮你生成 RedisTemplate
+     *  详见RedisAutoConfiguration
+     *
+     * 2.
+     *  redisTemplate 默认序列化使用的jdkSerializeable, 存储二进制字节码导致我们
+     *  使用redis客户端工具看的时候只能看到2进制,所以自定义序列化类
+     *
+     *
      * @param redisConnectionFactory
-     * @return
+     *
      */
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory){
