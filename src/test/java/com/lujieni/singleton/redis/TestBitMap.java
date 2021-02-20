@@ -36,6 +36,9 @@ public class TestBitMap {
         System.out.println(bit);
     }
 
+    /*
+        获得签到的总次数
+     */
     @Test
     public void test03(){
         Object result = redisTemplate.execute((RedisCallback<Long>) (redisConnection -> {
