@@ -190,4 +190,30 @@ public class TestBitMap {
         System.out.println(binaryString);
     }
 
+
+
+    /*
+     * 计算这2天登录的用户数
+     */
+    @Test
+    public void test() {
+        redisTemplate.opsForValue().setBit("monday", 1, true);
+        redisTemplate.opsForValue().setBit("monday", 2, true);
+        redisTemplate.opsForValue().setBit("tuesday", 1, true);
+        redisTemplate.opsForValue().setBit("tuesday", 2, true);
+        redisTemplate.opsForValue().setBit("tuesday", 3, true);
+
+        /*
+         * 计算周一和周二这2天有多少用户登录了
+         * 如果用户A在周一和周二都登录过了,只算一个用户
+         */
+        Object execute = redisTemplate.execute((RedisCallback) (redisConnection) -> {
+            BitSet b1 = BitSet.valueOf(redisConnection.get("monday".getBytes()));
+            b1.or(BitSet.valueOf(redisConnection.get("tuesday".getBytes())));//对应位逻辑或
+            int cardinality = b1.cardinality();
+            return cardinality;
+        });
+        System.out.println(execute);
+    }
+
 }
