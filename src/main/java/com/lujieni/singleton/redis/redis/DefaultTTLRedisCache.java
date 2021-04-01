@@ -5,6 +5,7 @@ import com.lujieni.singleton.redis.provider.ITTLCacheProvider;
 import com.lujieni.singleton.redis.redis.exception.KeyIsNotFoundException;
 import com.lujieni.singleton.redis.redis.storage.RedisCacheStorage;
 import com.lujieni.singleton.redis.storage.ITTLCacheStorage;
+import io.lettuce.core.RedisException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -149,6 +150,8 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
 
     @Override
     public void afterPropertiesSet() throws Exception {
-
+        if(this.cacheProvider == null){
+            throw new RedisException(this.getClass().getName()+" does not define cache data provider");
+        }
     }
 }
