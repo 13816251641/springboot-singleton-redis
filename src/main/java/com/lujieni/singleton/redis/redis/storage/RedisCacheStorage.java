@@ -23,7 +23,9 @@ public class RedisCacheStorage<K,V> implements ITTLCacheStorage<K,V>, Initializi
     private static final Log log = LogFactory.getLog(RedisCacheStorage.class);
 
     /**
-     * 实际进行缓存操作的template，由spring提供
+     * 实际进行缓存操作的template
+     * 在配置文件中: RedisTemplate<K,V> redisTemplate = new RedisTemplate();
+     * V v = redisTemplate.get(K k);仍受泛型控制
      */
     private RedisTemplate<K,V> redisTemplate;
 
@@ -73,8 +75,9 @@ public class RedisCacheStorage<K,V> implements ITTLCacheStorage<K,V>, Initializi
                 /* 经验证缓存ttl失效或者key本身就不存在都会导致key没找到的情况 */
                 throw new KeyIsNotFoundException("key is not found!");
             } else {
-                Object obj = this.redisTemplate.opsForValue().get(key);
-                return (V) obj;
+                V v = this.redisTemplate.opsForValue().get(key);
+                //return (V) obj;
+                return v;
             }
         }
     }

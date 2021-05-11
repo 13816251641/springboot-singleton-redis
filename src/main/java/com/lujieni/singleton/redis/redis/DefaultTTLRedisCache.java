@@ -32,6 +32,10 @@ public class DefaultTTLRedisCache<V> implements ICache<String,V>, InitializingBe
 
     /**
      * 数据存储器,通用的
+     *
+     * ITTLCacheStorage<String,StudentPO> cacheStorage = new RedisCacheStorage();
+     *
+     *
      */
     private ITTLCacheStorage<String,V> cacheStorage;
 
